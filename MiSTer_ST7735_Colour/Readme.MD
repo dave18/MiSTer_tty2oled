@@ -11,4 +11,6 @@ None of this would be possible without the excellent work done on tty2oled by Ve
 
 The display driver library I use is https://github.com/prenticedavid/Adafruit_GC9102_kbv as main ST7735 has issues with the right hand side of the display not working.
 
-![alt text](https://github.com/dave18/MiSTer_tty2oled/MiSTer_ST7735_Colour/blob/main/IMG_20220214_113402.jpg)
+![alt text](https://github.com/dave18/MiSTer_tty2oled/MiSTer_ST7735_Colour/IMG_20220214_113402.jpg)
+
+MiSTer_ST7735_Colour/IMG_20220214_113402.jpg
