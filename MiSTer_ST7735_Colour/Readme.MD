@@ -10,3 +10,5 @@ The ttyoled.ini and ttyoled.sh have been updated to scan for the COL and IDX fol
 None of this would be possible without the excellent work done on tty2oled by Venice for which I am vedry grateful.
 
 The display driver library I use is https://github.com/prenticedavid/Adafruit_GC9102_kbv as main ST7735 has issues with the right hand side of the display not working.
+
+![alt text](https://github.com/dave18/MiSTer_tty2oled/MiSTer_ST7735_Colour/blob/main/IMG_20220214_113402.jpg)
