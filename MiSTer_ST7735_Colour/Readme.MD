@@ -13,4 +13,18 @@ The display driver library I use is https://github.com/prenticedavid/Adafruit_GC
 
 ![alt text](https://github.com/dave18/MiSTer_tty2oled/blob/main/MiSTer_ST7735_Colour/IMG_20220214_113402.jpg)
 
+![alt text](https://github.com/dave18/MiSTer_tty2oled/blob/main/MiSTer_ST7735_Colour/IMG_20220214_114244.jpg)
+
+![alt text](https://github.com/dave18/MiSTer_tty2oled/blob/main/MiSTer_ST7735_Colour/IMG_20220214_114347.jpg)
+
+![alt text](https://github.com/dave18/MiSTer_tty2oled/blob/main/MiSTer_ST7735_Colour/IMG_20220214_114405.jpg)
+
+![alt text](https://github.com/dave18/MiSTer_tty2oled/blob/main/MiSTer_ST7735_Colour/IMG_20220214_195855.jpg)
+
+![alt text](https://github.com/dave18/MiSTer_tty2oled/blob/main/MiSTer_ST7735_Colour/IMG_20220214_202447.jpg)
+
+![alt text](https://github.com/dave18/MiSTer_tty2oled/blob/main/MiSTer_ST7735_Colour/IMG_20220214_202515.jpg)
+
+
+
 
