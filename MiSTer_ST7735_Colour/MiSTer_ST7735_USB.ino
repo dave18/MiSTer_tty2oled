@@ -185,7 +185,8 @@ Bounce RotationDebouncer = Bounce();     // Create Bounce class
 String newCommand = "";                // Received Text, from MiSTer without "\n" currently (2021-01-11)
 String prevCommand = "";
 String actCorename = "No Core loaded"; // Actual Received Corename
-uint8_t contrast = 5;                  // Contrast (brightness) of display, range: 0 (no contrast) to 255 (maximum)
+uint8_t contrast = 192;                  // Contrast (brightness) of display, range: 0 (no contrast) to 255 (maximum)
+uint8_t XBMColour = 12;                  // Contrast (brightness) of display, range: 0 (no contrast) to 255 (maximum)
 int tEffect = 0;                       // Run this Effect
 //char *newCommandChar;
 
@@ -275,9 +276,9 @@ void setup(void) {
   
   oled.setRotation(3);
   clearDisplay();
-  //oled.setContrast(contrast);                       // Set contrast of display
+  setContrast(contrast);                       // Set contrast of display
   oled.setTextSize(1);
-  oled.setTextColor(ST77XX_WHITE);  // White foreground, black background
+  oled.setTextColor(gScale[XBMColour]);  // White foreground, black background
   //oled.setFont(&FreeSans9pt7b);                   // Set Standard Font (available in 9/12/18/24 Pixel)
   //oled.cp437(true);                                 // Enable Code Page 437-compatible charset (bugfix)
 
@@ -285,7 +286,7 @@ void setup(void) {
   u8g2.begin(oled); 
   //u8g2.setFontMode(1);                             // Transpartent Font Mode, Background is transparent
   u8g2.setFontMode(0);                               // Non-Transpartent Font Mode, Background is overwritten
-  u8g2.setForegroundColor(ST77XX_WHITE);            // apply Adafruit GFX color
+  u8g2.setForegroundColor(gScale[XBMColour]);            // apply Adafruit GFX color
   u8g2.setBackgroundColor(ST77XX_BLACK);
 
   oled.setRotation(3);
@@ -442,7 +443,7 @@ void loop(void) {
 
   // Get Serial Data
   if (Serial.available()) {
-  prevCommand = newCommand;                                // Save old Command
+	prevCommand = newCommand;                                // Save old Command
     newCommand = Serial.readStringUntil('\n');             // Read string from serial until NewLine "\n" (from MiSTer's echo command) is detected or timeout (1000ms) happens.
     updateDisplay=true;                                    // Set Update-Display Flag
 
@@ -652,7 +653,7 @@ void oled_showStartScreen(void) {
 
     oled.setRotation(3);
   clearDisplay();  
-  oled.drawXBitmap(20, 0, tty2oled_logo, tty2oled_logo_width, tty2oled_logo_height, ST77XX_WHITE);
+  oled.drawXBitmap(20, 0, tty2oled_logo, tty2oled_logo_width, tty2oled_logo_height, gScale[XBMColour]);
   //oled.display();
 
   
@@ -675,7 +676,7 @@ void oled_showStartScreen(void) {
   u8g2.setFont(u8g2_font_5x7_mf);            // 6 Pixel Font
   u8g2.setCursor(0,63);
   u8g2.print(BuildVersion);   
-  oled.drawXBitmap(DispWidth-usb_icon_width, DispHeight-usb_icon_height, usb_icon, usb_icon_width, usb_icon_height, ST77XX_WHITE);
+  oled.drawXBitmap(DispWidth-usb_icon_width, DispHeight-usb_icon_height, usb_icon, usb_icon_width, usb_icon_height, gScale[XBMColour]);
 
 #ifdef USE_ESP32DEV
   if (micAvail) {
@@ -743,7 +744,7 @@ void oled_sendHardwareInfo(void) {
 // --------------------------------------------------------------
 void oled_drawlogo64h(uint16_t w, const uint8_t *bitmap) {
   clearDisplay();
-  if (w>160) oled.drawXBitmap160(DispWidth/2-w/4, 8, bitmap, w, 64, ST77XX_WHITE); else oled.drawXBitmap(DispWidth/2-w/2, 8, bitmap, w, 64, ST77XX_WHITE);
+  if (w>160) oled.drawXBitmap160(DispWidth/2-w/4, 8, bitmap, w, 64, gScale[XBMColour]); else oled.drawXBitmap(DispWidth/2-w/2, 8, bitmap, w, 64, gScale[XBMColour]);
   
 //  oled.display();
 } // end oled_drawlogo64h
@@ -873,7 +874,7 @@ void usb2oled_readnsetcontrast(void) {
   Serial.printf("Received Text: %s\n", (char*)cT.c_str());
 #endif
 
-//  oled.setContrast(cT.toInt());            // Read and Set contrast  
+  setContrast(cT.toInt());            // Read and Set contrast  
 }
 
 // --------------------------------------------------------------
@@ -1279,7 +1280,7 @@ void usb2oled_drawlogo(uint8_t e) {
       }
       // Finally overwrite the Screen with fill Size Picture
   //    clearDisplay();
-        if (halfsize) oled.drawXBitmap160(16, 8, logoBin, 256, 64, ST77XX_WHITE); else oled.drawXBitmap(0, 0, logoBin, DispWidth, DispHeight, ST77XX_WHITE);
+        if (halfsize) oled.drawXBitmap160(16, 8, logoBin, 256, 64, gScale[XBMColour]); else oled.drawXBitmap(0, 0, logoBin, DispWidth, DispHeight, gScale[XBMColour]);
         if (actPicType==GSC) draw4bppBitmap(logoBin);
         if (actPicType==COL) oled.drawRGBBitmap(0,0,(uint16_t*)logoBin,imageWidth,imageHeight);
    //   oled.display();
@@ -1533,8 +1534,8 @@ void usb2oled_drawlogo(uint8_t e) {
         Serial.println("drawXBitmap");
 #endif
         clearDisplay();
-        //oled.drawXBitmap(0, 0, logoBin, DispWidth, DispHeight, ST77XX_WHITE);
-        if (halfsize) oled.drawXBitmap160(16, 8, logoBin, 256, 64, ST77XX_WHITE); else oled.drawXBitmap(0, 0, logoBin, DispWidth, DispHeight, ST77XX_WHITE);
+        //oled.drawXBitmap(0, 0, logoBin, DispWidth, DispHeight, gScale[XBMColour]);
+        if (halfsize) oled.drawXBitmap160(16, 8, logoBin, 256, 64, gScale[XBMColour]); else oled.drawXBitmap(0, 0, logoBin, DispWidth, DispHeight, gScale[XBMColour]);
 //        oled.display();
       }
       if (actPicType == GSC) {
@@ -1588,7 +1589,7 @@ void usb2oled_drawlogo(uint8_t e) {
 //void drawEightPixelXY(int x, int y, int dx, int dy, uint16_t c) {
 void drawEightPixelXY(int x, int y, int dx, int dy) {
   
-  uint16_t c=0xFFFF;
+  uint16_t c=gScale[XBMColour];//0xFFFF;
   unsigned char b,b2;
   
   int i;
@@ -1637,7 +1638,7 @@ void drawEightPixelXY(int x, int y, int dx, int dy) {
 
 //void drawFourPixelXY(int x, int y, int dx, int dy, uint16_t c) {
 void drawFourPixelXY(int x, int y, int dx, int dy) {
-  uint16_t c=0xFFFF;
+  uint16_t c=gScale[XBMColour];//0xFFFF;
   unsigned char b;
   int i,b2;  
   switch (actPicType) {
@@ -1777,7 +1778,7 @@ void usb2oled_readnwritetext(void) {
     u8g2.setCursor(x,y);                                  // Set Cursor Position
     u8g2.print(TextOut);                                  // Write Text to Buffer
 //    if (!bufferMode) oled.display();                       // Update Screen only if not Clear Mode (Font>100)
-    u8g2.setForegroundColor(ST77XX_WHITE);               // Set Color back
+    u8g2.setForegroundColor(gScale[XBMColour]);               // Set Color back
     u8g2.setBackgroundColor(ST77XX_BLACK);
   }
   else { 
@@ -2028,7 +2029,7 @@ void enableOTA (void) {
     oled.setCursor(95,55);
     oled.setTextColor(ST77XX_BLACK);
     oled.printf("%u%%", (progress / (total / 100)));   // Re-Write the Value with Black to clear it for the next update
-    oled.setTextColor(ST77XX_WHITE);
+    oled.setTextColor(gScale[XBMColour]);
     })
     .onError([](ota_error_t error) {
       Serial.printf("Error[%u]: ", error);
@@ -2072,6 +2073,12 @@ void clearBorder()
   oled.fillRect(0,DispHeight-8,DispWidth,8,ST77XX_BLACK);
   oled.fillRect(0,0,16,DispHeight,ST77XX_BLACK);
   oled.fillRect(DispWidth-16,0,16,DispHeight,ST77XX_BLACK);
+}
+
+void setContrast(uint8_t c)
+{
+  XBMColour=(c>>4) & 15;
+  oled.setTextColor(gScale[XBMColour]);
 }
 
 
